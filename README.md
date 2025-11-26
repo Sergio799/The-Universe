@@ -262,15 +262,6 @@ MIT License - Feel free to use this as inspiration for your own cosmic portfolio
 - Vercel for hosting and optimization
 - React Three Fiber team for the excellent React integration
 
-## 📞 Contact
-
-**Sai Prakash Reddy Nallapareddy**
-- Portfolio: [your-site.vercel.app](https://your-site.vercel.app)
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your Name](https://linkedin.com/in/yourusername)
-- Email: your.email@example.com
-
----
 
 **Built with ❤️ and lots of ☕ by Sai Prakash**
 
