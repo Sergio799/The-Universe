@@ -266,7 +266,7 @@ export default function Landing() {
             >
               Full Stack Developer crafting{' '}
               <span className="text-cyan-400 font-medium">scalable solutions</span>{' '}
-              with React, Node.js, and modern web technologies
+              modern web technologies
             </motion.p>
 
             {/* Glowing Orb Button - Hidden on Mobile, Visible on Desktop */}
