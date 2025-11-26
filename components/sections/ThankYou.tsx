@@ -92,8 +92,7 @@ export default function ThankYou() {
               depth: false,
             }}
             dpr={[1, 1.5]}
-            frameloop="demand"
-            performance={{ min: 0.5 }}
+            frameloop="always"
             style={{ width: '100%', height: '100%' }}
           >
             <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={60} />
@@ -114,17 +113,15 @@ export default function ThankYou() {
         {/* Main Message */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, ease: 'easeOut' }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: 'easeOut', delay: 0.2 }}
           className="text-center max-w-4xl flex-shrink-0"
         >
-          {/* Thank You Title */}
+          {/* Thank You Title with letter animation */}
           <motion.h1 
             initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1.2, delay: 0.2 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.4 }}
             className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-6 lg:mb-8 text-white"
             style={{
               textShadow: '0 0 60px rgba(6, 182, 212, 0.6)',
@@ -132,68 +129,140 @@ export default function ThankYou() {
               lineHeight: '1'
             }}
           >
-            THANK YOU
+            {['T', 'H', 'A', 'N', 'K', ' ', 'Y', 'O', 'U'].map((letter, index) => (
+              <motion.span
+                key={index}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.4 + index * 0.1,
+                  ease: "easeOut"
+                }}
+                style={{ display: 'inline-block' }}
+              >
+                {letter === ' ' ? '\u00A0' : letter}
+              </motion.span>
+            ))}
           </motion.h1>
 
-          {/* Animated Underline */}
+          {/* Animated Underline with pulse */}
           <motion.div
             initial={{ scaleX: 0, opacity: 0 }}
-            whileInView={{ scaleX: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.5 }}
-            className="h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mb-8 lg:mb-10 max-w-2xl mx-auto"
+            animate={{ 
+              scaleX: 1, 
+              opacity: 1,
+            }}
+            transition={{ duration: 1, delay: 1.5 }}
+            className="h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mb-8 lg:mb-10 max-w-2xl mx-auto relative"
             style={{ transformOrigin: 'center' }}
-          />
+          >
+            <motion.div
+              animate={{
+                opacity: [0.5, 1, 0.5],
+                scale: [1, 1.2, 1],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-300 to-transparent blur-sm"
+            />
+          </motion.div>
 
-          {/* Message */}
+          {/* Message with fade and slide */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.7 }}
+            initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 1, delay: 1.8 }}
             className="text-xl sm:text-2xl md:text-3xl text-white/90 font-light mb-4 leading-relaxed"
           >
             For visiting my universe
           </motion.p>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.9 }}
+            initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 1, delay: 2.1 }}
             className="text-lg sm:text-xl md:text-2xl text-white/70 font-light italic"
           >
-            I hope you enjoyed the experience
+            <motion.span
+              animate={{
+                opacity: [0.7, 1, 0.7],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              I hope you enjoyed the experience
+            </motion.span>
           </motion.p>
         </motion.div>
 
-        {/* Footer */}
+        {/* Footer with slide up */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 1.5 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 2.4 }}
           className="text-center w-full flex-shrink-0 mt-12"
         >
-          <p className="text-white/50 text-sm">
+          <motion.p
+            animate={{
+              opacity: [0.5, 0.7, 0.5],
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="text-white/50 text-sm"
+          >
             © 2025 Sai Prakash Reddy Nallapareddy. All rights reserved.
-          </p>
+          </motion.p>
         </motion.div>
       </div>
 
-      {/* Pagination Indicator */}
+      {/* Pagination Indicator with slide in */}
       <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, delay: 1.6 }}
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 2.6, ease: "easeOut" }}
         className="absolute bottom-8 sm:bottom-10 lg:bottom-12 left-6 sm:left-8 md:left-12 lg:left-16 flex items-center gap-4 lg:gap-6 z-20"
         role="navigation"
         aria-label="Page navigation"
       >
-        <span className="text-gray-600 text-xl lg:text-2xl font-light">04</span>
-        <div className="w-20 lg:w-24 h-px bg-gray-700" aria-hidden="true"></div>
-        <span className="text-white text-xl lg:text-2xl font-light" aria-current="page">05</span>
+        <motion.span 
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="text-gray-600 text-xl lg:text-2xl font-light"
+        >
+          04
+        </motion.span>
+        <motion.div 
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.8, delay: 2.8 }}
+          className="w-20 lg:w-24 h-px bg-gray-700" 
+          aria-hidden="true"
+          style={{ transformOrigin: 'left' }}
+        />
+        <motion.span 
+          animate={{ 
+            textShadow: [
+              '0 0 10px rgba(6, 182, 212, 0.5)',
+              '0 0 20px rgba(6, 182, 212, 0.8)',
+              '0 0 10px rgba(6, 182, 212, 0.5)',
+            ]
+          }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="text-white text-xl lg:text-2xl font-light" 
+          aria-current="page"
+        >
+          05
+        </motion.span>
       </motion.div>
     </section>
   );
