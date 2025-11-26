@@ -9,7 +9,7 @@ An immersive 3D portfolio experience showcasing my journey as a Full Stack Devel
 
 ## 🚀 Live Demo
 
-**[View Live Site →](https://your-site.vercel.app)** *(Deploy to get your URL)*
+**[View Live Site →](https://the-universe-eight.vercel.app/)
 
 ## ✨ Features
 
