@@ -60,8 +60,21 @@ function Starfield() {
 export default function Lab() {
   const [selectedUFO, setSelectedUFO] = useState<string | null>(null);
   const [isHovering, setIsHovering] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   
   const handleClose = useCallback(() => setSelectedUFO(null), []);
+
+  // Detect mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Auto-close after 5 seconds if not hovering
   useEffect(() => {
@@ -122,7 +135,11 @@ export default function Lab() {
               clipPath: 'inset(0)'
             }}
           >
-            <PerspectiveCamera makeDefault position={[0, 8, 25]} fov={55} />
+            <PerspectiveCamera 
+              makeDefault 
+              position={[0, isMobile ? 10 : 8, isMobile ? 32 : 25]} 
+              fov={isMobile ? 65 : 55} 
+            />
             <ambientLight intensity={0.8} />
             <directionalLight position={[10, 15, 10]} intensity={1.5} />
             <directionalLight position={[-10, 10, -10]} intensity={1} color="#00ffff" />

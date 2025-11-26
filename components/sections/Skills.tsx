@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { PerspectiveCamera, OrbitControls } from '@react-three/drei';
-import { useRef, useMemo, useEffect, Suspense } from 'react';
+import { useRef, useMemo, useEffect, Suspense, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { skillsData } from '../../lib/data/skills';
@@ -141,6 +141,19 @@ function SkillsScene() {
 }
 
 export default function Skills() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <section 
       id="skills"
@@ -252,7 +265,11 @@ export default function Skills() {
             frameloop="always"
             style={{ width: '100%', height: '100%', pointerEvents: 'auto', position: 'absolute', top: 0, left: 0 }}
           >
-            <PerspectiveCamera makeDefault position={[0, 8, 25]} fov={60} />
+            <PerspectiveCamera 
+              makeDefault 
+              position={[0, isMobile ? 10 : 8, isMobile ? 32 : 25]} 
+              fov={isMobile ? 70 : 60} 
+            />
             <ambientLight intensity={0.5} />
             <pointLight position={[10, 10, 10]} intensity={1} />
             <pointLight position={[-10, -10, -10]} intensity={0.5} color="#8b5cf6" />

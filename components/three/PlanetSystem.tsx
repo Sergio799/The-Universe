@@ -52,6 +52,11 @@ function Planet({ data, onClick, isSelected }: { data: PlanetData; onClick: () =
   const meshRef = useRef<THREE.Mesh>(null);
   const orbitRef = useRef<THREE.Group>(null);
   const [hovered, setHovered] = useState(false);
+  
+  // Mobile-responsive sizing
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const sizeMultiplier = isMobile ? 1.5 : 1; // 50% larger on mobile
+  const adjustedSize = data.size * sizeMultiplier;
 
   // Planet styling configuration
   const getPlanetStyle = useCallback((): PlanetStyle => {
@@ -157,7 +162,7 @@ function Planet({ data, onClick, isSelected }: { data: PlanetData; onClick: () =
           onPointerOut={handlePointerOut}
           raycast={undefined}
         >
-          <sphereGeometry args={[data.size, 48, 48]} />
+          <sphereGeometry args={[adjustedSize, 48, 48]} />
           <meshPhongMaterial
             color={style.color}
             emissive={isSelected || hovered ? style.color : '#000000'}
@@ -173,7 +178,7 @@ function Planet({ data, onClick, isSelected }: { data: PlanetData; onClick: () =
         {style.hasRings && (
           <>
             <mesh rotation={[Math.PI / 2.2, 0, 0]}>
-              <ringGeometry args={[data.size * 1.4, data.size * 2.3, 64]} />
+              <ringGeometry args={[adjustedSize * 1.4, adjustedSize * 2.3, 64]} />
               <meshPhongMaterial
                 color={style.ringColor}
                 transparent
@@ -183,7 +188,7 @@ function Planet({ data, onClick, isSelected }: { data: PlanetData; onClick: () =
               />
             </mesh>
             <mesh rotation={[Math.PI / 2.2, 0, 0]}>
-              <ringGeometry args={[data.size * 1.35, data.size * 1.45, 64]} />
+              <ringGeometry args={[adjustedSize * 1.35, adjustedSize * 1.45, 64]} />
               <meshBasicMaterial
                 color="#8B7355"
                 transparent
@@ -199,8 +204,8 @@ function Planet({ data, onClick, isSelected }: { data: PlanetData; onClick: () =
           Array.from({ length: style.moons }).map((_, i) => (
             <Moon
               key={i}
-              size={data.size * 0.25}
-              distance={data.size * (2.5 + i * 0.8)}
+              size={adjustedSize * 0.25}
+              distance={adjustedSize * (2.5 + i * 0.8)}
               speed={1.5 + i * 0.5}
             />
           ))}

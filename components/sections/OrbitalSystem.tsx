@@ -10,6 +10,19 @@ import { experienceData } from '../../lib/data/experience';
 export default function OrbitalSystem() {
   const [selectedPlanet, setSelectedPlanet] = useState<string | null>(null);
   const [isHovering, setIsHovering] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handlePlanetClick = useCallback((id: string) => {
     setSelectedPlanet(id);
@@ -68,7 +81,12 @@ export default function OrbitalSystem() {
         frameloop="always"
         style={{ pointerEvents: 'auto', touchAction: 'none' }}
       >
-        <PerspectiveCamera makeDefault position={[0, 25, 0]} rotation={[-Math.PI / 2, 0, 0]} fov={60} />
+        <PerspectiveCamera 
+          makeDefault 
+          position={[0, isMobile ? 42 : 25, 0]} 
+          rotation={[-Math.PI / 2, 0, 0]} 
+          fov={isMobile ? 80 : 60} 
+        />
         <ambientLight intensity={1.2} />
         <pointLight position={[0, 0, 0]} intensity={15} color="#FFA500" />
         <pointLight position={[0, 20, 0]} intensity={3} color="#FFFFFF" />
